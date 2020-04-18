@@ -6,11 +6,12 @@ const {
     deleteBootCamp,
     updateBootCamp
 } = require('../Controller/bootcamp');
+const { protect } = require('../Middleware/auth')
 const router = express.Router();
 
 router
     .route('/')
-    .get(getBootcamps)
+    .get(protect,getBootcamps)
     .post(createBootCamp);
 
 router

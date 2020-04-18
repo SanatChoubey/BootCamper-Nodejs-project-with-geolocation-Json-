@@ -1,15 +1,18 @@
 const bootCamp = require('../Models/BootCamp');
 const ErrorHandler = require('../utils/errorClass')
 exports.getBootcamps = (req, res, next) => {
+    console.log('hello', req.query);
     bootCamp
-        .find()
+        .find(req.query)
+        .populate('courses')
         .then((data) => {
             res.status(200).send({ BootCampsList: data })
-        }).catch(e => res.satus(400).send({ error: e }))
+        }).catch(e => res.status(400).send({ error: e }))
         // res.status(200).send({ Success: true, data: { process: 'processing...' } })
 };
 exports.getBootcamp = (req, res, next) => {
     const id = req.params.id;
+    
     bootCamp
         .findById(id)
         .then(result => res.status(200).send({ success: true, data: result }))
